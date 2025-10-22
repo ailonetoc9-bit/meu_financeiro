@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatórios Mensais</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <a href="/">🏠 Início</a>
+        <a href="/relatorios">📅 Relatórios</a>
+    </div>
+
+    <!-- CONTEÚDO CENTRAL -->
+    <div class="container">
+        <h1>📅 Relatórios Mensais</h1>
+
+        <!-- FORMULÁRIO DE FILTRO -->
+        <form action="/relatorios" method="GET">
+            <label>Mês:</label>
+            <input type="number" name="mes" min="1" max="12" required value="{{ mes or '' }}">
+
+            <label>Ano:</label>
+            <input type="number" name="ano" min="2000" max="2100" required value="{{ ano or '' }}">
+
+            <button type="submit">Filtrar</button>
+        </form>
+
+        {% if transacoes %}
+            <h2>Transações de {{ mes }}/{{ ano }}</h2>
+
+            <table>
+                <tr>
+                    <th>Data</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                    <th>Descrição</th>
+                </tr>
+                {% for t in transacoes %}
+                <tr>
+                    <td>{{ t['data'] }}</td>
+                    <td>{{ t['tipo'] }}</td>
+                    <td>R$ {{ t['valor'] }}</td>
+                    <td>{{ t['descricao'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <h3>Resumo</h3>
+            <p>💰 Total de ganhos: <strong>R$ {{ ganhos }}</strong></p>
+            <p>💸 Total de despesas: <strong>R$ {{ despesas }}</strong></p>
+            <p>⚖️ Saldo final: <strong>R$ {{ saldo }}</strong></p>
+
+        {% elif mes and ano %}
+            <p style="text-align:center;">❌ Nenhuma transação encontrada para {{ mes }}/{{ ano }}</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

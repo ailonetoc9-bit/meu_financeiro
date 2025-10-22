@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Transação</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>✏️ Editar Transação</h1>
+
+    <form action="/atualizar/{{ transacao['id'] }}" method="POST">
+        <label>Tipo:</label>
+        <select name="tipo" required>
+            <option value="ganho" {% if transacao['tipo'] == 'ganho' %}selected{% endif %}>Ganho</option>
+            <option value="despesa" {% if transacao['tipo'] == 'despesa' %}selected{% endif %}>Despesa</option>
+        </select>
+
+        <label>Valor (R$):</label>
+        <input type="number" step="0.01" name="valor" value="{{ transacao['valor'] }}" required>
+
+        <label>Descrição:</label>
+        <input type="text" name="descricao" value="{{ transacao['descricao'] }}" required>
+
+        <label>Data:</label>
+        <input type="date" name="data" value="{{ transacao['data'] }}" required>
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+
+    <a href="/">← Voltar</a>
+</body>
+</html>

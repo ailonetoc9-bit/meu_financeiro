@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Minhas Finanças</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <div class="navbar">
+        <a href="/">🏠 Início</a>
+        <a href="/relatorios">📅 Relatórios</a>
+    </div>
+
+    <!-- CONTEÚDO CENTRAL -->
+    <div class="container">
+        <h1>💰 Minhas Finanças</h1>
+        <h2>Saldo atual: R$ {{ saldo }}</h2>
+
+        <!-- FORMULÁRIO DE ADIÇÃO -->
+        <form action="/adicionar" method="POST">
+            <label>Tipo:</label>
+            <select name="tipo" required>
+                <option value="ganho">Ganho</option>
+                <option value="despesa">Despesa</option>
+            </select>
+
+            <label>Valor (R$):</label>
+            <input type="number" step="0.01" name="valor" placeholder="Valor" required>
+
+            <label>Descrição:</label>
+            <input type="text" name="descricao" placeholder="Ex: mesada, corte de cabelo..." required>
+
+            <label>Data:</label>
+            <input type="date" name="data" required>
+
+            <button type="submit">Adicionar</button>
+        </form>
+
+        <!-- HISTÓRICO -->
+        <h3>Histórico</h3>
+        <table>
+            <tr>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Valor</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+            {% for t in transacoes %}
+            <tr>
+                <td>{{ t['data'] }}</td>
+                <td>{{ t['tipo'] }}</td>
+                <td>R$ {{ t['valor'] }}</td>
+                <td>{{ t['descricao'] }}</td>
+                <td>
+                    <a href="/editar/{{ t['id'] }}">✏️ Editar</a> |
+                    <a href="/excluir/{{ t['id'] }}" onclick="return confirm('Tem certeza que deseja excluir esta transação?')">🗑️ Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>
