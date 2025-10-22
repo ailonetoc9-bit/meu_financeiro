@@ -19,6 +19,8 @@ def create_table():
             valor REAL NOT NULL,
             descricao TEXT,
             data TEXT NOT NULL
+            mes INTERGER
+            ano INTERGER
         )
     ''')
     conn.commit()
