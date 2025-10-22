@@ -18,13 +18,14 @@ def create_table():
             tipo TEXT NOT NULL,
             valor REAL NOT NULL,
             descricao TEXT,
-            data TEXT NOT NULL
+            data TEXT NOT NULL,
             mes INTEGER,
             ano INTEGER
         )
     ''')
     conn.commit()
     conn.close()
+
 
 create_table()
 
